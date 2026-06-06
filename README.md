@@ -1,84 +1,131 @@
-World Bank Economic Data — Cleaning and Analysis
+# World Bank Economic Indicators Analysis (1990 - Present)
 
-Author: Aiman Ishaq
-Data Source: World Bank Open Data
+**Tools:** Python · pandas · NumPy · matplotlib  
+**Data:** 266 countries · 3 indicators · 9,000 rows  
+**Skills shown:** Data cleaning · Wide-to-long reshaping · Feature engineering · EDA · Data visualization
 
+---
 
-What this project does
+## The One-Line Summary
 
-World Bank publishes country-level economic indicators in wide format, one column per year, with real countries and regional aggregates sitting in the same file. This notebook takes three separate indicator files, cleans and reshapes them into a single tidy dataset, and uses it to look at Pakistan's economic position against its South Asian peers across 30+ years.
+Pakistan has consistently trailed its South Asian neighbours in GDP per capita for 35 years, while inflation spikes have been sharp, shock-driven, and recurring.
 
+---
 
-Indicators used
+## The Problem
 
-GDP per capita (current USD)
-Inflation, consumer prices (annual %)
-Unemployment, total (% of total labour force)
+The World Bank publishes country-level economic data in wide format — one column per year — with regional aggregates mixed into the same file as real countries. Three separate indicator files needed to be cleaned, reshaped, and merged before any analysis was possible.
 
+This project answers four questions:
 
-Tools
+- How has Pakistan's GDP per capita compared to the South Asia average since 1990?
+- When did inflation crises hit and how severe were they?
+- Where does Pakistan sit relative to its South Asian neighbours today?
+- Has global income convergence actually happened across decades?
 
-Python, pandas, numpy, matplotlib
+---
 
+## The Dataset
 
-What the notebook covers
+**Source:** World Bank Open Data (public)  
+**Files:** GDP.csv · inflation.csv · unemployment.csv  
+**Coverage:** 266 countries · 1960 to present · 3 indicators
 
-Loading raw World Bank CSVs — the files have 4 metadata rows at the top that need skipping before the actual data starts.
+| Column | What It Means |
+|---|---|
+| `gdp_per_capita` | GDP per capita in current USD |
+| `inflation_pct` | Annual consumer price inflation % |
+| `unemployment_pct` | Unemployment as % of total labour force |
+| `economic_stress_index` | Engineered: inflation + unemployment combined |
+| `gdp_category` | Income tier: Low / Lower-Middle / Upper-Middle / High |
+| `decade` | Decade label for grouped analysis |
 
-Dropping junk columns — each file comes with unnamed trailing columns and two redundant indicator columns that serve no purpose in analysis.
+---
 
-Filtering regional aggregates — World Bank files mix real countries with aggregates like WLD, ECA, SSA. The notebook uses ISO code pattern matching combined with an explicit exclusion list to keep only real countries.
+## What I Built
 
-Reshaping wide to long — year columns get unpivoted using pd.melt() so each row represents one country, one year, one value.
+### Step 1: Clean and Reshape
+**File:** `world_bank_data_cleaning.ipynb`
 
-Merging all three indicators on Country Code and Year into a single dataset.
+Three problems with the raw files:
+- Wide format: 71 columns per file, one per year
+- Regional aggregates (WLD, ECA, etc.) mixed with real countries
+- No shared structure across the three indicator files
 
-Filtering to 1990 onwards where coverage across countries is consistent enough to be useful.
+Steps taken:
+- Skipped 4 World Bank metadata rows on load
+- Dropped unnamed trailing columns and redundant indicator columns
+- Melted all three files from wide to long format
+- Filtered to real countries only using country code length
+- Merged all three indicators into one tidy dataset on Country Code and Year
+- Engineered `economic_stress_index`, `gdp_category`, and `decade` columns
+- Exported two outputs: full dataset (9,000 rows) and complete cases only (5,590 rows)
 
-Standardising country names — fixing World Bank naming conventions like "Korea, Rep." and "Egypt, Arab Rep." to readable names.
+---
 
-Feature engineering — a composite economic stress index (mean of inflation and unemployment), World Bank income category brackets, and decade labels for trend grouping.
+## Analysis and Visualizations
 
-Pakistan-focused analysis comparing GDP per capita, inflation history, and regional standing against South Asian peers.
+### Q1. How has Pakistan's GDP per capita trended vs the South Asia average?
 
-Exporting two clean CSVs — one with all rows including NaNs, one with complete cases only.
+![Pakistan GDP per Capita vs South Asia Average](Pakistan_GDP_per_Capita_vs_South_Asia_Average.png)
 
+Pakistan tracked closely with the South Asia average through the late 1990s. After 2000 the gap widened steadily as India and Sri Lanka drove the regional average upward through sustained productivity gains. Pakistan's trajectory shows boom-bust cycles rather than structural growth, suggesting dependence on remittances and consumption over export-led transformation.
 
-Charts
+---
 
-Pakistan GDP per Capita vs South Asia Average (1990 to present)
+### Q2. When did inflation crises hit Pakistan?
 
-Both lines start close together around $500 in 1990. From the mid-2000s they begin separating. By 2024 the South Asia average is approaching $5,000 while Pakistan sits flat around $1,500. The shaded gap between the two lines makes the divergence hard to miss — Pakistan has not kept pace with how the rest of the region has grown.
+![Pakistan Inflation Rate](Pakistan_Inflation_Rate.png)
 
-Pakistan Inflation Rate (1990 to present)
+Inflation exceeded 10% during two concentrated periods: the early-to-mid 1990s and the 2008 to 2010 post-GFC spillover, with the worst spike in 2023 at over 30%. These are sharp shocks, not gradual drift, meaning Pakistan's inflation is largely shock-driven rather than chronic demand-pull. This matters for currency stability and monetary policy modeling.
 
-Three high-inflation periods stand out. The mid-1990s saw rates consistently above 10%. The 2008 spike hit just over 20%. Then a relatively stable window through the 2010s before inflation climbed again from 2020, peaking above 30% in 2023 — the worst reading in the entire 35-year dataset.
+---
 
-South Asia GDP per Capita — 2024
+### Q3. Where does Pakistan sit in South Asia today?
 
-Pakistan at $1,479 sits near the bottom of the region, just above Nepal at $1,447. Bangladesh at $2,593 and India at $2,695 are nearly double. Sri Lanka at $4,516 and Maldives at $13,379 are in a different category entirely.
+![South Asia GDP per Capita 2024](South_Asia_GDP_per_Capita.png)
 
-Global Income Category Distribution by Decade
+As of 2024, Pakistan's GDP per capita stands at $1,479, second lowest in South Asia above only Nepal ($1,447). It sits far below India ($2,695), Bangladesh ($2,593), and Sri Lanka ($4,516). Despite being the second largest economy in South Asia by population, Pakistan ranks near the bottom by per capita income.
 
-The Low Income share dropped from around 40% of country-year observations in the 1990s to under 10% by the 2020s. High Income and Upper-Middle Income shares have grown each decade. The catch is that this shift has largely benefited the middle tiers — the very bottom has not moved much.
+---
 
+### Q4. Has global income convergence happened?
 
-Key findings
+![Global Income Category Distribution by Decade](Global_Income_Category_Distribution_by_Decade.png)
 
-Pakistan's GDP growth has been slow and largely flat in per capita terms while the South Asia average has accelerated, driven mainly by India and Sri Lanka. The gap in 2024 is not a recent development — it has been widening steadily since the mid-2000s.
+The share of High Income and Upper-Middle Income countries has grown each decade since the 1990s, consistent with broad development gains across East Asia, Eastern Europe, and Latin America. However the Low Income share has not meaningfully declined, suggesting convergence is benefiting middle tiers disproportionately while the poorest economies remain structurally stuck.
 
-Inflation in Pakistan is not a chronic background problem but a shock-driven one. The pattern across 35 years shows sharp spikes followed by recovery, not a steady upward drift. The 2023 spike at over 30% is the most severe in the dataset by a significant margin.
+---
 
-Global income convergence is real but uneven. Middle-income countries have graduated upward each decade, but the lowest-income tier has remained largely stuck, which suggests the gains from globalisation and development have had a ceiling for the poorest economies.
+## Key Findings
 
-Unemployment data has the most coverage gaps of the three indicators. Any analysis using the economic stress index should account for this — rows where unemployment is missing still get a partial score from inflation alone, which changes what the index actually measures.
+1. Pakistan has trailed the South Asia average in GDP per capita every year since the early 2000s, with the gap widening each decade.
+2. Inflation in Pakistan is shock-driven, not chronic. Two concentrated crisis periods account for most of the high-inflation years.
+3. Pakistan ranks 5th out of 6 South Asian countries in GDP per capita as of 2024.
+4. Global income convergence is real but incomplete. The bottom tier has not meaningfully improved its share.
+5. Unemployment data is the primary reliability constraint in this dataset. The economic stress index should be interpreted with caution due to coverage gaps in self-reported unemployment figures.
 
+---
 
-Files
+## Outputs
 
-world_bank_data_cleaning.ipynb — main notebook
-data/GDP.csv — raw GDP per capita file from World Bank
-data/inflation.csv — raw inflation file from World Bank
-data/unemployment.csv — raw unemployment file from World Bank
-world_bank_clean.csv — full cleaned and merged dataset, NaNs kept
-world_bank_complete_cases.csv — rows where all three indicators are present
+| File | Description |
+|---|---|
+| `world_bank_clean.csv` | Full cleaned dataset, 9,000 rows |
+| `world_bank_complete_cases.csv` | Rows with all 3 indicators present, 5,590 rows |
+
+---
+
+## How to Run
+
+1. Place GDP.csv, inflation.csv, and unemployment.csv in a `data/` folder
+2. Install requirements: `pip install pandas numpy matplotlib`
+3. Run all cells in `world_bank_data_cleaning.ipynb`
+
+---
+
+## About Me
+Aiman Ishaq
+Data analytics student building real projects on real data.
+
+[GitHub](https://github.com/aiman-ami) · [LinkedIn](https://linkedin.com/in/aiman-ishaq)
