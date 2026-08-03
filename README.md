@@ -93,7 +93,7 @@ The share of High Income and Upper-Middle Income countries has grown each decade
 
 ## How to Run
 
-1. Place `GDP.csv`, `inflation.csv`, and `unemployment.csv` in a `data/` folder in the project root.
+1. Place `GDP.csv`, `inflation.csv`, and `unemployment.csv` in the same folder as `world_bank_data_cleaning.ipynb`.
 2. Install requirements: `pip install pandas numpy matplotlib`
 3. Open `world_bank_data_cleaning.ipynb` and run all cells from top to bottom (Restart Kernel and Run All is recommended to ensure the country filter and every downstream step apply cleanly).
 4. Cleaned outputs (`world_bank_clean.csv`, `world_bank_complete_cases.csv`) and all four charts will be generated in the notebook's working directory.
