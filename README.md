@@ -82,7 +82,7 @@ The share of High Income and Upper-Middle Income countries has grown each decade
 2. **Pakistan has experienced two distinct inflation crises.** Annual inflation exceeded 10% during two concentrated periods: the early-to-mid 1990s and the 2008-2011 post-GFC spillover. These were sharp spikes, not gradual drift, indicating Pakistan's inflation is largely shock-driven rather than chronic demand-pull.
 3. **Pakistan ranks 5th out of 6 South Asian countries** in GDP per capita as of 2024.
 4. **Global income convergence is real and broad-based.** The Low Income share of country-year observations fell from roughly 38% in the 1990s to 11% in the 2020s, the largest shift of any income tier, while High and Upper-Middle Income shares both grew steadily.
-5. **Unemployment data is the primary reliability constraint in this dataset.** The economic stress index should be interpreted with caution due to coverage gaps in self-reported unemployment figures.
+5. Inflation and unemployment both carry meaningful reporting gaps in this dataset, inflation is missing in 23.0 percent of rows and unemployment in 16.4 percent. The economic stress index should be interpreted with caution as a result, since a portion of its values are built from only one of the two underlying indicators rather than both.
 
 ## Outputs
 
