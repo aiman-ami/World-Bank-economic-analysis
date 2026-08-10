@@ -106,4 +106,4 @@ The share of High Income and Upper-Middle Income countries has grown each decade
 ## About Me
 
 Aiman Ishaq
-Data analytics student building real projects on real data.
+Data analyst building real projects on real data.
