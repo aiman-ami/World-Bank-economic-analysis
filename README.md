@@ -1,7 +1,7 @@
 # World Bank Economic Indicators Analysis (1990 - Present)
 
 **Tools:** Python · pandas · NumPy · matplotlib · scipy
-**Data:** 217 countries · 3 primary indicators · 7,812 rows
+**Data:** 217 countries · 3 indicators · 7,812 rows
 **Skills shown:** Data cleaning · Wide-to-long reshaping · Feature engineering · EDA · Statistical testing · Data visualization
 
 ## The One-Line Summary
@@ -60,7 +60,7 @@ Steps taken:
 ### Q1. How has Pakistan's GDP per capita trended vs the South Asia average?
 ![Pakistan GDP per Capita vs South Asia Average](Pakistan_GDP_per_Capita_vs_South_Asia_Average.png)
 
-Pakistan was already below the South Asia average in 1990, but the gap widened sharply after 2000 as India and Sri Lanka drove the regional average upward. Pakistan's trajectory shows boom-bust cycles rather than steady convergence. A Levene's test confirms that Pakistan's year-over-year GDP growth volatility is significantly higher than the South Asia average (p &lt; 0.05). This pattern is consistent with economies reliant on volatile capital inflows, though testing that hypothesis would require additional data on remittances, exports, and sectoral composition.
+Pakistan was already below the South Asia average in 1990, but the gap widened sharply after 2000 as India and Sri Lanka drove the regional average upward. Pakistan's trajectory shows boom-bust cycles rather than steady convergence. Pakistan's year-over-year GDP growth standard deviation (11.30%) is materially higher than the South Asia average (8.35%), though sparse overlapping data prevents a formal significance test. This pattern is consistent with economies reliant on volatile capital inflows, though testing that hypothesis would require additional data on remittances, exports, and sectoral composition.
 
 ### Q2. When did inflation crises hit Pakistan?
 ![Pakistan Inflation Rate](Pakistan_Inflation_Rate.png)
@@ -79,7 +79,7 @@ The share of High Income and Upper-Middle Income countries has grown each decade
 
 ## Key Findings
 
-1. **Pakistan's GDP growth has been volatile and structurally lagging.** Pakistan has trailed the South Asia average in GDP per capita since 1990, with the gap widening sharply after 2000. A Levene's test confirms Pakistan's year-over-year GDP growth volatility is significantly higher than the South Asia average (p &lt; 0.05), while India and Sri Lanka drove the regional average upward through steadier convergence.
+1. **Pakistan's GDP growth has been volatile and structurally lagging.** Pakistan has trailed the South Asia average in GDP per capita since 1990, with the gap widening sharply after 2000. Pakistan's year-over-year GDP growth standard deviation (11.30%) is materially higher than the South Asia average (8.35%), though sparse overlapping data prevents a formal significance test. India and Sri Lanka drove the regional average upward through steadier convergence.
 
 2. **Pakistan has experienced three distinct inflation crises.** Annual inflation exceeded 10% during three concentrated periods: the early-to-mid 1990s, 2008-2011, and 2019-2024. These were sharp spikes, not gradual drift, indicating Pakistan's inflation is largely shock-driven rather than chronic demand-pull. The worst single-year spike was 2023 at 30.8%.
 
