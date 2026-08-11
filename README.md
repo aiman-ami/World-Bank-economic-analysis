@@ -1,7 +1,7 @@
 # World Bank Economic Indicators Analysis (1990 - Present)
 
 **Tools:** Python · pandas · NumPy · matplotlib · scipy
-**Data:** 217 countries · 3 indicators · 7,812 rows
+**Data:** 217 economies (countries and territories) · 3 indicators · 7,812 rows
 **Skills shown:** Data cleaning · Wide-to-long reshaping · Feature engineering · EDA · Statistical testing · Data visualization
 
 ## The One-Line Summary
@@ -10,7 +10,7 @@ Pakistan has consistently trailed its South Asian neighbours in GDP per capita f
 
 ## The Problem
 
-The World Bank publishes country-level economic data in wide format, one column per year, with regional and income-group aggregates (like WLD, EUU, SSF) mixed into the same file as real countries. Three separate indicator files needed to be cleaned, reshaped, filtered, and merged before any analysis was possible.
+The World Bank publishes country-level economic data in wide format, one column per year, with regional and income-group aggregates (like WLD, EUU, SSF) mixed into the same file as individual economies. Three separate indicator files needed to be cleaned, reshaped, filtered, and merged before any analysis was possible.
 
 This project answers four questions:
 
@@ -23,8 +23,10 @@ This project answers four questions:
 
 **Source:** World Bank Open Data (public)
 **Files:** GDP.csv · inflation.csv · unemployment.csv
-**Raw coverage:** 266 country/aggregate entities · 1960 to present · 3 indicators
-**After filtering to real countries only:** 217 countries
+**Raw coverage:** 266 entities (economies and regional/income aggregates) · 1960 to present · 3 indicators
+**After filtering to individual economies:** 217
+
+A note on the 217 figure: the World Bank tracks "economies," not only UN-recognized sovereign states. Of the 217 kept after filtering, roughly 23 are territories or dependencies with their own ISO codes rather than independent countries, for example Hong Kong SAR, Puerto Rico, Bermuda, Greenland, and the Channel Islands. This is why the figure is higher than the commonly cited count of around 195 sovereign countries. The filtering logic correctly excludes World Bank regional and income-group aggregates (WLD, EUU, SSF, and 46 others); it was never intended to exclude sub-national territories, since those are distinct reporting entities in the source data, not aggregates.
 
 | Column | What It Means |
 |---|---|
@@ -41,13 +43,13 @@ This project answers four questions:
 
 Three problems with the raw files:
 - Wide format: 71 columns per file, one per year
-- Regional and income-group aggregates (WLD, EUU, SSF, and 46 others) mixed with real countries
+- Regional and income-group aggregates (WLD, EUU, SSF, and 46 others) mixed with individual economies
 - No shared structure across the three indicator files
 
 Steps taken:
 - Skipped 4 World Bank metadata rows on load
 - Dropped unnamed trailing columns and redundant indicator columns
-- Filtered to real countries using a country-code exclusion list covering all World Bank regional and income-group aggregates (49 codes excluded, verified against the full set rather than a partial list), leaving 217 real countries
+- Filtered out regional and income-group aggregates using a 49-code exclusion list (verified against the full World Bank aggregate list rather than a partial one), leaving 217 individual economies, which include roughly 23 territories and dependencies alongside sovereign countries
 - Melted all three files from wide to long format
 - Merged all three indicators into one tidy dataset on Country Code and Year
 - Engineered `gdp_category` and `decade` columns
@@ -74,7 +76,7 @@ As of 2024, Pakistan's GDP per capita stands at $1,479, 4th out of 5 South Asian
 ### Q4. Has global income convergence happened?
 ![Global Income Category Distribution by Decade](Global_Income_Category_Distribution_by_Decade.png)
 
-The share of High Income and Upper-Middle Income countries has grown each decade since the 1990s, consistent with broad development gains across East Asia, Eastern Europe, and Latin America. The Low Income share fell sharply, from roughly 38% of country-year observations in the 1990s to about 11% by the 2020s. Limitation: These shares use period-specific World Bank thresholds; even so, some portion of the shift reflects nominal USD appreciation rather than purely real growth.
+The share of High Income and Upper-Middle Income economies has grown each decade since the 1990s, consistent with broad development gains across East Asia, Eastern Europe, and Latin America. The Low Income share fell sharply, from roughly 38% of economy-year observations in the 1990s to about 11% by the 2020s. Limitation: these shares use period-specific World Bank thresholds; even so, some portion of the shift reflects nominal USD appreciation rather than purely real growth.
 
 ## Key Findings
 
@@ -84,7 +86,7 @@ The share of High Income and Upper-Middle Income countries has grown each decade
 
 3. **Pakistan ranks 4th out of 5 South Asian countries** in GDP per capita as of 2024 (Afghanistan and Bhutan lack 2024 data; Maldives excluded as an outlier), standing at $1,479, just above Nepal.
 
-4. **Global income convergence is real but incomplete.** The Low Income share of country-year observations fell from roughly 38% in the 1990s to 11% in the 2020s. This analysis uses period-specific income thresholds, though nominal USD drift means the true real-growth component is smaller than the nominal shift suggests.
+4. **Global income convergence is real but incomplete.** The Low Income share of economy-year observations fell from roughly 38% in the 1990s to 11% in the 2020s. This analysis uses period-specific income thresholds, though nominal USD drift means the true real-growth component is smaller than the nominal shift suggests.
 
 5. **Data gaps are material and explicitly flagged.** Inflation is missing in 23.0% of post-1990 rows, unemployment in 16.4%. Unemployment coverage was too sparse to support a reliable Pakistan-specific trend, so it's excluded from the Pakistan analysis and from the final export beyond the raw column.
 
@@ -92,7 +94,7 @@ The share of High Income and Upper-Middle Income countries has grown each decade
 
 | File | Description |
 |---|---|
-| world_bank_clean.csv | Full cleaned dataset, 7,812 rows, real countries only |
+| world_bank_clean.csv | Full cleaned dataset, 7,812 rows, 217 economies |
 | world_bank_complete_cases.csv | Rows with all 3 indicators present, 5,522 rows |
 
 ## How to Run
